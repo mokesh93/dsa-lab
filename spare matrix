@@ -1,0 +1,91 @@
+
+class node:
+    def __init__(self, row, col, value):
+        self.row = row
+        self.col = col
+        self.value = value
+        self.next = None
+
+
+class nodelist:
+    def __init__(self):
+        self.head = None
+
+    def insert(self):
+
+        l = []
+
+        row = int(input("Enter the size of row: "))
+        col = int(input("Enter the size of col: "))
+
+        # Create matrix
+        for i in range(row):
+            il = []
+
+            for j in range(col):
+                v = int(input("Enter the value: "))
+                il.append(v)                                      #[[1,2,3][3,4,5],[6,7,8]]
+
+            l.append(il)
+
+        '''# Display original matrix
+        print("------------------------")
+
+        for i in range(row):
+            for j in range(col):
+                print(l[i][j], end=" ")
+
+            print()
+
+        print("------------------------")'''
+
+        # Create sparse matrix using linked list
+        for i in range(row):
+            for j in range(col):
+
+                if l[i][j] != 0:
+
+                    r = i
+                    c = j
+                    value = l[i][j]
+
+                    n = node(r, c, value)
+
+                    # Insert node into linked list
+                    if self.head is None:
+                        self.head = n
+
+                    else:
+                        temp = self.head
+
+                        while temp.next is not None:
+                            temp = temp.next
+
+                        temp.next = n
+
+    def display(self):
+
+        if self.head is None:
+            print("No non-zero elements")
+            return
+
+        temp = self.head
+
+        print("Sparse Matrix Linked List")
+        print("--------------------------")
+
+        while temp is not None:
+
+            print("Row:", temp.row)
+            print("Col:", temp.col)
+            print("Value:", temp.value)
+            print()
+
+            temp = temp.next
+
+
+n1 = nodelist()
+
+n1.insert()
+
+n1.display()
