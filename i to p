@@ -1,0 +1,70 @@
+def balanced(expression):
+    stack = []
+
+    for ch in expression:
+
+        if ch in "([{":
+            stack.append(ch)
+
+        elif ch in ")]}":
+
+            if not stack:
+                return False
+
+            top = stack.pop()
+
+            if (ch == ')' and top != '(') or \
+               (ch == ']' and top != '[') or \
+               (ch == '}' and top != '{'):
+                return False
+
+    return len(stack) == 0
+
+def infix_to_postfix(expression):
+
+    stack = []
+    postfix = ""
+
+    priority = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2,
+        '^': 3
+    }
+
+    for ch in expression:
+
+        if ch.isalnum():
+            postfix += ch
+
+        elif ch in "([{":
+            stack.append(ch)
+
+        elif ch in ")]}":
+
+            while stack and stack[-1] not in "([{":
+                postfix += stack.pop()
+
+            stack.pop()
+
+        else:
+            while (stack and stack[-1] not in "([{" and
+                   priority[stack[-1]] >= priority[ch]):
+                postfix += stack.pop()
+
+            stack.append(ch)
+
+    while stack:
+        postfix += stack.pop()
+
+    return postfix
+
+
+expression = input("Enter infix expression: ")
+
+if balanced(expression):
+    print("Expression is balanced")
+    print("Postfix expression:", infix_to_postfix(expression))
+else:
+    print("Expression is not balanced")
